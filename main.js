@@ -26,14 +26,33 @@ class Rocket {
     }
 }
 function test() {
-    let genes = createGenes();
-    let curve1 = new Phaser.Curves.CubicBezier(genes, genes[50], genes[100], genes[149]);
-    for (let i = 5; i < 150; i++) {
-        genes[i].x+= 500;
-        genes[i].y+= 500;
+    let genes = createGenes2();
+
+    console.log(genes);
+    let curve1 =new Phaser.Curves.CubicBezier(genes[0], genes[1], genes[2], genes[3]);
+    for (let i = 2; i < 4; i++) {
+        genes[i].x = genes[i].x+ 50;
+        genes[i].y = genes[i].y +60;
     }
-    let curve2 = new Phaser.Curves.CubicBezier(genes, genes[50], genes[100], genes[149]);
+
+    console.log(genes);
+    let curve2 = new Phaser.Curves.CubicBezier(genes[0], genes[1], genes[2],genes[3]);
+    let p0 = new Phaser.Math.Vector2(800, 600);
+    let p1 = new Phaser.Math.Vector2(700, 300);
+    let p2 = new Phaser.Math.Vector2(100, 500);
+    let p3 = new Phaser.Math.Vector2(200, 150);
+    console.log(curve1);
+    console.log(curve2);
     return [curve1,curve2];
+}
+
+function createGenes2() {
+    let genes = [];
+    genes.push(new Phaser.Math.Vector2(400, 600));
+    for (let i = 1; i<4; i++) {
+        genes.push(new Phaser.Math.Vector2(Math.random() * 800, Math.random() * 600));
+    }
+    return genes;
 }
 function createGenes() {
     let genes = [];
@@ -87,9 +106,9 @@ function create () {
     }
     curves = test();
     graphics = this.add.graphics();
-        graphics.lineStyle(1, 0xffffff, 1);
-        curves[0].draw(graphics, 150);
-        curves[1].draw(graphics, 150);
+    graphics.lineStyle(1, 0xffffff, 1);
+    curves[0].draw(graphics, 150);
+    curves[1].draw(graphics, 150);
 
 }
 function getAngle(x1, y1, x2, y2) {
