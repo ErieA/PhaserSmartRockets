@@ -22,6 +22,7 @@ class Rocket {
         this.points = this.curve.getPoints(150);
         this.fitness = 0;
         this.crashed = false;
+        this.inEarth = false;
     }
 }
 function createGenes() {
@@ -41,17 +42,21 @@ function createRockets() {
 }
 function preload () {
     this.load.image('rocket', 'cohete_off.png');
+    this.load.image('background', "background.jpg");
+    this.load.image('boulder', 'boulder.png');
+    this.load.image('earth', 'earth.png');
     this.load.atlas('flares', 'flares.png', 'flares.json');
 }
 
 function create () {
+    this.add.image(400,400, 'background').setScale(2);
     gameState.rocketVectors = createRockets();
     gameState.rockets = [];
     gameState.particles = [];
-    this.add.circle(400, 100, 10, 0x6666ff);
-    var graphics = this.add.graphics();
-    graphics.fillStyle(0xff0000, 1);
-    graphics.fillRect(200, 200, 400, 50);
+    for (let x = 0; x < 7; x++){
+        this.add.image(230 + (60 * x), 230, 'boulder');
+    }
+    this.add.image(410, 100,'earth').setScale(.4);
     for (let i = 0; i < numRockets; i++) {
         gameState.rockets.push(this.physics.add.sprite(400, 600, 'rocket').setScale(.1));
         gameState.particles[i] = this.add.particles('flares');
@@ -88,8 +93,6 @@ function update() {
     //     graphics.destroy();
     // }
     if (p < 150) {
-        // gameState.particles[0].x += 1;
-        // gameState.particles[0].y += 1;
         for (let i = 0; i < numRockets; i++) {
             if (!gameState.rocketVectors[i].crashed) {
                 let points = gameState.rocketVectors[i].points[p];
@@ -109,6 +112,13 @@ function update() {
             if (!gameState.rocketVectors[i].crashed && insideBox(gameState.rockets[i])) {
                 gameState.rocketVectors[i].fitness = fitness(gameState.rockets[i]);
                 gameState.rocketVectors[i].fitness = gameState.rocketVectors[i].fitness/10;
+                gameState.rocketVectors[i].crashed = true;
+            }
+            if (!gameState.rocketVectors[i].crashed && !insideBox(gameState.rockets[i])
+                && !gameState.rocketVectors[i].inEarth && inEarth(gameState.rockets[i])) {
+                gameState.rocketVectors[i].fitness = fitness(gameState.rockets[i]);
+                gameState.rocketVectors[i].fitness = gameState.rocketVectors[i].fitness * 10;
+                gameState.rocketVectors[i].inEarth = true;
                 gameState.rocketVectors[i].crashed = true;
             }
         }
@@ -155,8 +165,10 @@ function update() {
 function mutate(rocket) {
     let genes = rocket.genes;
     let rand = Math.floor(Math.random() * (genes.length - 1 ));
+    let rand2 = Math.floor(Math.random() * (genes.length - 1 ));
     let p1;
     let p2;
+    let p3;
     for (let i = 1; i < genes.length; i++) {
         if (i <= rand + 10 && i >= rand - 10) {
             genes[i] = Phaser.Math.Vector2(Math.random() * 800, Math.random() * 600);
@@ -164,6 +176,20 @@ function mutate(rocket) {
             p1 = Phaser.Math.Vector2(Math.random() * 800, Math.random() * 600);
             p2 = Phaser.Math.Vector2(Math.random() * 800, Math.random() * 600);
         }
+        if (i <= rand2 + 4 && i >= rand2 - 4) {
+            let distToEarth = Math.floor(Math.sqrt((Math.pow(genes[149].x - 410, 2)) + Math.pow(genes[149].y - 100, 2)));
+            if (genes[149].x < 410) {
+                genes[149].x += distToEarth/3;
+            } else {
+                genes[149].x -= distToEarth/3;
+            }
+            if (genes[149] < 100) {
+                genes[149].y += distToEarth/3;
+            } else {
+                genes[149].y -= distToEarth/3;
+            }
+        }
+
     }
     if (p1 !== undefined && p2 !== undefined) {
         rocket.curve = new Phaser.Curves.CubicBezier(genes, p1, p2, genes[149]);
@@ -184,12 +210,22 @@ function mate(rocket1, rocket2, rocket3) {
     return rocket;
 }
 function fitness(rocket) {
-    return 806 - Math.floor(Math.sqrt((Math.pow(rocket.x - 400, 2)) + Math.pow(rocket.y - 100, 2)));
+    let fitness = 806 - Math.floor(Math.sqrt((Math.pow(rocket.x - 410, 2)) + Math.pow(rocket.y - 100, 2)));
+    if (rocket.y < 250) {
+        fitness += 50;
+    }
+    if (rocket.y < 200) {
+        fitness += 50;
+    }
+    return fitness;
+}
+function inEarth(rocket) {
+    return 30 >= Math.floor(Math.sqrt((Math.pow(rocket.x - 410, 2)) + Math.pow(rocket.y - 100, 2)));
 }
 function insideBox(rocket) {
     let x = rocket.x;
     let y = rocket.y;
-    return (x >= 200 && x <= 600 && y >= 200 && y <= 250)
+    return (x >= 200 && x <= 620 && y >= 200 && y <= 260)
         || (x < 0 && y < 0)
         || (x < 0 && y > 800)
         || (x > 800 && y < 0)

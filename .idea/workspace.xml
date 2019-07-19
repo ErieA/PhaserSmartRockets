@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b301a5b-442b-4736-a014-bdb86e13bb89" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/boulder.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/earth.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongoose-free-6.9.exe" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,10 +32,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+            <state relative-caret-position="350">
+              <caret line="186" column="30" selection-start-line="186" selection-start-column="30" selection-end-line="186" selection-end-column="30" />
               <folding>
-                <marker date="1563547487425" expanded="true" signature="3338:3380" ph="..." />
+                <marker date="1563552262624" expanded="true" signature="3464:3506" ph="..." />
               </folding>
             </state>
           </provider>
@@ -67,6 +72,10 @@
       <find>console</find>
       <find>numRockets</find>
       <find>numRoc</find>
+      <find>box</find>
+      <find>crashed</find>
+      <find>vector</find>
+      <find>mutate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,7 +163,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33689000" />
+    <option name="totallyTimeSpent" value="38459000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
@@ -217,12 +226,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/earth.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        <state relative-caret-position="350">
+          <caret line="186" column="30" selection-start-line="186" selection-start-column="30" selection-end-line="186" selection-end-column="30" />
           <folding>
-            <marker date="1563547487425" expanded="true" signature="3338:3380" ph="..." />
+            <marker date="1563552262624" expanded="true" signature="3464:3506" ph="..." />
           </folding>
         </state>
       </provider>
